@@ -1,0 +1,19 @@
+[package]
+name = "skylane"
+version = "0.0.1"
+description = "Wayland protocol implementation"
+homepage = "https://github.com/perceptia/skylane"
+repository = "https://github.com/perceptia/skylane"
+keywords = ["skylane", "wayland", "protocol"]
+categories = ["gui"]
+license = "MIT"
+authors = ["Wojciech Kluczka <wojciech.kluczka@gmail.com>"]
+
+[dependencies]
+nix = "0.8"
+byteorder = "1.0"
+
+[lib]
+name = "skylane"
+path = "src/lib.rs"
+
