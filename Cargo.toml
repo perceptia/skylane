@@ -16,4 +16,3 @@ byteorder = "1.0"
 [lib]
 name = "skylane"
 path = "src/lib.rs"
-

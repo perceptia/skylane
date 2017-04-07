@@ -15,12 +15,13 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//! Server part of `skylane` crate.
+//! Client part of `skylane` crate.
 
 pub use defs::{Header, Logger, SkylaneError, Task};
 pub use object::{Object, ObjectId};
 pub use bundle::Bundle;
 pub use connection::{Connection, Controller};
-pub use sockets::{DisplaySocket, Socket};
+pub use sockets::Socket;
 
 pub use object::DISPLAY_ID;
+

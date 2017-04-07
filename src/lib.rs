@@ -1,4 +1,4 @@
-// Copyright 2016 The Perceptia Project Developers
+// Copyright 2016-2017 The Perceptia Project Developers
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 // and associated documentation files (the "Software"), to deal in the Software without
@@ -15,13 +15,20 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//! Skylane is implmentation of Wayland protocol writen from scratch in Rust.
+//! `skylane` is implmentation of Wayland protocol writen from scratch in Rust.
 //!
 //! TODO: Add more documentation.
-//! TODO: Implement client part.
+
+#![warn(missing_docs)]
 
 extern crate byteorder;
 extern crate nix;
 
-pub mod common;
+mod defs;
+mod object;
+mod bundle;
+mod connection;
+mod sockets;
+
 pub mod server;
+pub mod client;

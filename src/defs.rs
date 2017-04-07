@@ -1,4 +1,4 @@
-// Copyright 2016 The Perceptia Project Developers
+// Copyright 2016-2017 The Perceptia Project Developers
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 // and associated documentation files (the "Software"), to deal in the Software without
@@ -15,26 +15,49 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//! Common definitions for server and client parts of Skylane crate.
+//! Common definitions for server and client parts of `skylane` crate.
 
 use std;
 use std::error::Error;
 
 use nix;
 
+use object::{Object, ObjectId};
+
 // -------------------------------------------------------------------------------------------------
 
-/// Error enumeration for all Skylane errors.
+/// Enumeration for all `skylane` errors.
 #[derive(Debug)]
 pub enum SkylaneError {
-    IO { description: String },
-    Socket { description: String },
-    WrongObject { object_id: u32 },
+    /// Wrapper for `std::io::Error`.
+    IO {
+        /// Description of the error.
+        description: String,
+    },
+
+    /// Wrapper for `nix::Error`.
+    Socket {
+        /// Description of the error.
+        description: String,
+    },
+
+    /// Error emitted when trying to access not existing object.
+    WrongObject {
+        /// ID of requested object.
+        object_id: ObjectId,
+    },
+
+    /// Error emitted when requested method does not exist in given interface.
     WrongOpcode {
+        /// Name of interface.
         name: &'static str,
+        /// Referred object ID.
         object_id: u32,
+        /// Requested method.
         opcode: u16,
     },
+
+    /// Other errors.
     Other(String),
 }
 
@@ -62,7 +85,7 @@ impl std::convert::From<std::env::VarError> for SkylaneError {
 #[repr(C)]
 #[derive(Debug)]
 pub struct Header {
-    /// ID of the referred objects.
+    /// ID of the referred object.
     pub object_id: u32,
 
     /// ID of the called method.
@@ -74,39 +97,32 @@ pub struct Header {
 
 // -------------------------------------------------------------------------------------------------
 
-/// Structure representing ID of protocol object.
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
-pub struct ObjectId(u32);
+/// Type alias for logging function.
+pub type Logger = Option<fn(String) -> ()>;
 
-impl ObjectId {
-    pub fn new(value: u32) -> Self {
-        ObjectId(value)
-    }
+// -------------------------------------------------------------------------------------------------
 
-    /// Returns numerical value of objects ID.
-    pub fn get_value(&self) -> u32 {
-        self.0
-    }
+/// Return enumeration for callbacks.
+///
+/// This enumeration will be removed. It proved it is insufficient on client side. `Bundle` should
+/// be used instead.
+pub enum Task {
+    /// Requests creation of object.
+    Create {
+        /// New object ID.
+        id: ObjectId,
+        /// Object to be added.
+        object: Box<Object>,
+    },
 
-    /// Checks if object ID is valid.
-    pub fn is_null(&self) -> bool {
-        self.0 == 0
-    }
+    /// Requests destruction of object.
+    Destroy {
+        /// ID of object to be destroyed.
+        id: ObjectId,
+    },
+
+    /// Requests nothing.
+    None,
 }
-
-impl std::fmt::Display for ObjectId {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", self.get_value())
-    }
-}
-
-impl std::fmt::Debug for ObjectId {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?}", self.get_value())
-    }
-}
-
-/// Default ID of main global object.
-pub const DISPLAY_ID: ObjectId = ObjectId(1);
 
 // -------------------------------------------------------------------------------------------------
