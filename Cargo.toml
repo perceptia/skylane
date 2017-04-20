@@ -1,6 +1,6 @@
 [package]
 name = "skylane"
-version = "0.0.1"
+version = "0.1.0"
 description = "Wayland protocol implementation"
 homepage = "https://github.com/perceptia/skylane"
 repository = "https://github.com/perceptia/skylane"
