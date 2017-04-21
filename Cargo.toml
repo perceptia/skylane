@@ -1,7 +1,8 @@
 [package]
 name = "skylane"
-version = "0.1.0"
+version = "0.1.1"
 description = "Wayland protocol implementation"
+documentation = "https://docs.rs/skylane"
 homepage = "https://github.com/perceptia/skylane"
 repository = "https://github.com/perceptia/skylane"
 keywords = ["skylane", "wayland", "protocol"]

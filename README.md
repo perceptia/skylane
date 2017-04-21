@@ -13,10 +13,17 @@ Project consists of three repositories:
  - [`skylane_protocols`](https://github.com/perceptia/skylane_protocols) - protocol marshalling code
    generated using `skylane_scanner` + some glue code
 
-Status
-------
+Documentation
+-------------
+
+Documentation can be found on [docs.rs](https://docs.rs/skylane).
+
+Project
+-------
 
 `skylane` is developed as part of [`perceptia`](https://github.com/perceptia/perceptia) project.
 
-Currently only server parts are implemented but stay tuned - `skylane` just started gaining
-momentum.
+License
+-------
+
+Github Changelog Generator is released under the [MIT License](https://opensource.org/licenses/MIT).
