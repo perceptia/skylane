@@ -22,8 +22,9 @@ Project
 -------
 
 `skylane` is developed as part of [`perceptia`](https://github.com/perceptia/perceptia) project.
+Most up to date usage examples can be found there.
 
 License
 -------
 
-Github Changelog Generator is released under the [MIT License](https://opensource.org/licenses/MIT).
+`skylane` is released under the [MIT License](https://opensource.org/licenses/MIT).
