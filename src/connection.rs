@@ -54,6 +54,13 @@ impl Controller {
         self.bundle.get_next_available_client_object_id()
     }
 
+    /// Returns next available server object ID.
+    ///
+    /// See `Bundle::get_next_available_server_object_id`.
+    pub fn get_next_available_server_object_id(&self) -> ObjectId {
+        self.bundle.get_next_available_server_object_id()
+    }
+
     /// Adds new object.
     ///
     /// See `Bundle::add_object`.
@@ -61,11 +68,18 @@ impl Controller {
         self.bundle.add_object(id, object);
     }
 
-    /// Adds next object.
+    /// Adds next client object.
     ///
     /// See `Bundle::add_next_client_object`.
     pub fn add_next_client_object(&mut self, object: Box<Object>) -> ObjectId {
         self.bundle.add_next_client_object(object)
+    }
+
+    /// Adds next server object.
+    ///
+    /// See `Bundle::add_next_server_object`.
+    pub fn add_next_server_object(&mut self, object: Box<Object>) -> ObjectId {
+        self.bundle.add_next_server_object(object)
     }
 }
 
@@ -102,6 +116,20 @@ impl Connection {
         Controller::new(self.bundle.duplicate())
     }
 
+    /// Returns next available client object ID.
+    ///
+    /// See `Bundle::get_next_available_client_object_id`.
+    pub fn get_next_available_client_object_id(&self) -> ObjectId {
+        self.bundle.get_next_available_client_object_id()
+    }
+
+    /// Returns next available server object ID.
+    ///
+    /// See `Bundle::get_next_available_server_object_id`.
+    pub fn get_next_available_server_object_id(&self) -> ObjectId {
+        self.bundle.get_next_available_server_object_id()
+    }
+
     /// Adds new object.
     ///
     /// See `Bundle::add_object`.
@@ -109,11 +137,18 @@ impl Connection {
         self.bundle.add_object(id, object);
     }
 
-    /// Adds new object.
+    /// Adds new client object.
     ///
     /// See `Bundle::add_next_client_object`.
     pub fn add_next_client_object(&mut self, object: Box<Object>) -> ObjectId {
         self.bundle.add_next_client_object(object)
+    }
+
+    /// Adds next server object.
+    ///
+    /// See `Bundle::add_next_server_object`.
+    pub fn add_next_server_object(&mut self, object: Box<Object>) -> ObjectId {
+        self.bundle.add_next_server_object(object)
     }
 
     /// Removes object with given `id`.

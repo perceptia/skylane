@@ -22,7 +22,7 @@ use std::collections::HashMap;
 use std::rc::Rc;
 
 use defs::SkylaneError;
-use object::{Object, ObjectId, DISPLAY_ID};
+use object::{Object, ObjectId, DISPLAY_ID, SERVER_START_ID};
 use sockets::Socket;
 
 // -------------------------------------------------------------------------------------------------
@@ -44,6 +44,13 @@ impl Bundle {
     ///
     /// If no objects are registered this will be `DISPLAY_ID`. Otherwise ID one bigger than the
     /// biggest ID.
+    ///
+    /// TODO: This implementation is naive and invalid. Check how it is implemented in `libwayland`
+    /// and do the same here for compability. `get_next_available_server_object_id` may also need a
+    /// change.
+    ///
+    /// TODO: Move `get_next_available_client_object_id` and `get_next_available_server_object_id`
+    /// to trait available only in celit or server side respectively.
     pub fn get_next_available_client_object_id(&self) -> ObjectId {
         if let Some(max) = self.objects.borrow().keys().max() {
             if *max >= DISPLAY_ID {
@@ -53,6 +60,19 @@ impl Bundle {
             }
         } else {
             DISPLAY_ID
+        }
+    }
+
+    /// Returns next available server object ID.
+    pub fn get_next_available_server_object_id(&self) -> ObjectId {
+        if let Some(max) = self.objects.borrow().keys().max() {
+            if *max >= SERVER_START_ID {
+                max.incremented()
+            } else {
+                SERVER_START_ID
+            }
+        } else {
+            SERVER_START_ID
         }
     }
 
@@ -70,6 +90,13 @@ impl Bundle {
     /// Gets next available client object ID and adds new object. Returns ID of newly added object.
     pub fn add_next_client_object(&mut self, object: Box<Object>) -> ObjectId {
         let id = self.get_next_available_client_object_id();
+        self.add_object(id, object);
+        id
+    }
+
+    /// Gets next available server object ID and adds new object. Returns ID of newly added object.
+    pub fn add_next_server_object(&mut self, object: Box<Object>) -> ObjectId {
+        let id = self.get_next_available_server_object_id();
         self.add_object(id, object);
         id
     }
